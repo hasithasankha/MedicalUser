@@ -1,0 +1,78 @@
+﻿@page "/Drug/EditDrug/{CurrentID}"
+@using MedicalUser.Data
+@using MedicalUser.Model;
+@inject DrugService drugService
+@inject NavigationManager navManger;
+
+
+<h1>Edit Drug</h1>
+<hr />
+<EditForm Model="@objDrug" OnValidSubmit="@UpdateDrug">
+    <DataAnnotationsValidator />
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Trde_Name" class="control-label">Trde_Name</label>
+                <input form="Trde_Name" class="form-control" placeholder="Enter Drug Name" @bind="objDrug.Trde_Name" />
+                <ValidationMessage For="@(() => objDrug.Trde_Name)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Generic_Name" class="control-label">Generic_Name</label>
+                <input form="Generic_Name" class="form-control" placeholder="Enter Genaric" @bind="objDrug.Generic_Name" />
+                <ValidationMessage For="@(() => objDrug.Generic_Name)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Note" class="control-label">Note</label>
+                <input form="Note" class="form-control" placeholder="Enter Drugs Note" @bind="objDrug.Note" />
+                <ValidationMessage For="@(() => objDrug.Note)" />
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-info" Style="margin-top:10px">Update</button>
+
+            <button type="reset" class="btn btn-danger" Style="margin-top:10px" @onclick="@Cancel">Cancel</button>
+        </div>
+    </div>
+</EditForm>
+
+
+
+
+@code {
+    [Parameter]
+    public string CurrentID { get; set; }
+
+
+    Drug objDrug = new Drug();
+    bool displayValidationErrorMessages = false;
+    bool displayUserAddedToDB = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        objDrug = await Task.Run(() => drugService.GetDrugById(Convert.ToInt32(CurrentID)));
+    }
+
+
+    private void UpdateDrug(EditContext context)
+    {
+
+        displayValidationErrorMessages = false;
+        displayUserAddedToDB = true;
+        drugService.UpdateDrug(objDrug);
+        navManger.NavigateTo("Drug/drugList");
+    }
+    private void Cancel()
+    {
+        displayValidationErrorMessages = true;
+        displayUserAddedToDB = false;
+        navManger.NavigateTo("Drug/drugList");
+    }
+}

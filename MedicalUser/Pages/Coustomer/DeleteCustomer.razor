@@ -1,0 +1,67 @@
+﻿@page "/Coustomer/DeleteCustomer/{CurrentId}"
+@using MedicalUser.Data
+@using MedicalUser.Model;
+@inject CustomerService customerService
+@inject NavigationManager navManger;
+
+
+<h1>Delete Customer</h1>
+<hr />
+
+<h3> Are You Sure Delete This Record</h3>
+
+<form>
+    <div class="row">
+        <input type="hidden" @bind="objCustomer.Id" />
+
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Names" class="control-label">Names</label>
+                <input form="Names" class="form-control" @bind="objCustomer.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="Address" class="control-label">Address</label>
+                <input form="Address" class="form-control" @bind="objCustomer.Address" />
+            </div>
+
+            <div class="form-group">
+                <label for="Email" class="control-label">Email</label>
+                <input form="Email" class="form-control" @bind="objCustomer.Email" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <input type="button" class="btn btn-danger" @onclick="@DelCustomer" value="Yes" />
+            <input type="button" class="btn btn-primary" @onclick="@Cancel" value="No" />
+        </div>
+    </div>
+</form>
+
+
+
+@code {
+    [Parameter]
+    public string CurrentId { get; set; }
+
+    Customer objCustomer = new Customer();
+
+    protected override async Task OnInitializedAsync()
+    {
+        objCustomer = await Task.Run(() => customerService.GetCustomerById(Convert.ToInt32(CurrentId)));
+    }
+
+
+    protected void DelCustomer()
+    {
+        customerService.DeleteCustomer(objCustomer.Id);
+        navManger.NavigateTo("Coustomer/customerList");
+    }
+    void Cancel()
+    {
+        navManger.NavigateTo("Coustomer/customerList");
+    }
+}

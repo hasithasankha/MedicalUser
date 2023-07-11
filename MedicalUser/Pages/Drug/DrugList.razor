@@ -1,0 +1,81 @@
+﻿@page "/Drug/drugList"
+@using MedicalUser.Data
+@using MedicalUser.Model;
+@inject DrugService drugService ;
+
+
+
+
+<h3>Drug List</h3>
+
+@*<a class="nav-link" href="AddCustomer">
+    <span class="oi oi-pulse"></span> Add New
+</a>*@
+
+<a class="nav-link" href="/Drug/AddDrug" style="text-align: right;">
+    <input type="button" class="btn btn-primary" style="background-color: green;" value="Add New" />
+</a>
+
+
+
+@if (drugList == null)
+{
+    <p><em>Loading........</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>#</th>*@
+                <th>Trde Name</th>
+                <th>Generic Name</th>
+                <th>Note</th>
+                <th>Edit Details</th>
+                <th>Delete Details</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in drugList)
+            {
+                <tr>
+                    @*<td>@item.Id</td>*@
+                    <td>@item.Trde_Name</td>
+                    <td>@item.Generic_Name</td>
+                    <td>@item.Note</td>
+                    <td>
+                        <a class="nav-link" href="/Drug/EditDrug/@item.ID">
+                            <span class="oi oi-pencil" aril-hidden="true" style="color:blue"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="nav-link" href="/Drug/DeleteDrug//@item.ID">
+                            <span class="oi oi-trash" aril-hidden="true" style="color:red"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+
+    </table>
+}
+
+
+
+
+
+
+
+
+@code {
+    List<Drug> drugList;
+    protected override async Task OnInitializedAsync()
+    {
+        drugList = await Task.Run(() => drugService.GetDrugList());
+    }
+
+}

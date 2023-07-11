@@ -1,0 +1,87 @@
+﻿@page "/Coustomer/EditCustomer/{CurrentId}"
+@using MedicalUser.Data
+@using MedicalUser.Model;
+@inject CustomerService customerService
+@inject NavigationManager navManger; 
+
+
+
+<h1>Edit Customer</h1>
+<hr />
+<EditForm Model="@objCustomer" OnValidSubmit="@UpdateCustomer">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <input type="hidden" @bind="objCustomer.Id" />
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Names" class="control-label">Names</label>
+                <input form="Names" class="form-control" placeholder="Enter Your Name" @bind="objCustomer.Name" />
+                <ValidationMessage For="@(() => objCustomer.Name)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Address" class="control-label">Address</label>
+                <input form="Address" class="form-control" placeholder="Enter Your Address" @bind="objCustomer.Address" />
+                <ValidationMessage For="@(() => objCustomer.Address)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Email" class="control-label">Email</label>
+                <input form="Email" class="form-control" placeholder="Enter Your Email" @bind="objCustomer.Email" />
+                <ValidationMessage For="@(() => objCustomer.Email)" />
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        @* <div class="col-md-4">
+        <input type="button" class="btn btn-primary" @onclick="@AddCustomerDetail" value="Save" />
+        <input type="button" class="btn btn-danger" @onclick="@Cancel" value="Cancel" />
+        </div>*@
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-info" Style="margin-top:10px">Update</button>
+
+            <button type="reset" class="btn btn-danger" Style="margin-top:10px" @onclick="@Cancel">Cancel</button>
+        </div>
+    </div>
+
+
+
+
+</EditForm>
+
+
+
+@code {
+
+    [Parameter]
+    public string CurrentId { get; set; }
+
+    Customer objCustomer = new Customer();
+    bool displayValidationErrorMessages = false;
+    bool displayUserAddedToDB = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        objCustomer = await Task.Run(() => customerService.GetCustomerById(Convert.ToInt32(CurrentId)));
+    }
+  
+    private void UpdateCustomer(EditContext context)
+    {
+
+        displayValidationErrorMessages = false;
+        displayUserAddedToDB = true;
+        customerService.UpdateCustomer(objCustomer);
+        navManger.NavigateTo("Coustomer/customerList");
+    }
+    private void Cancel()
+    {
+        displayValidationErrorMessages = true;
+        displayUserAddedToDB = false;
+        navManger.NavigateTo("Coustomer/customerList");
+    }
+}

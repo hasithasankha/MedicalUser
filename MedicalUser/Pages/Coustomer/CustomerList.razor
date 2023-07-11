@@ -1,0 +1,90 @@
+﻿@page "/Coustomer/customerList"
+@using MedicalUser.Data
+@using MedicalUser.Model;
+@using System.Drawing;
+@using System.ComponentModel;
+@inject CustomerService customerService;
+
+
+
+
+<h3>Customer List</h3>
+
+@*<a class="nav-link" href="AddCustomer">
+    <span class="oi oi-pulse"></span> Add New
+</a>*@
+
+<a class="nav-link" href="/Coustomer/AddCustomer" style="text-align: right;">
+    <input type="button" class="btn btn-primary" style="background-color: green;" value="Add New" />
+
+</a>
+
+
+
+@if (cutomerList == null)
+{
+    <p><em>Loading........</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>#</th>*@
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Edit Details</th>
+                <th>Delete Details</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in cutomerList)
+            {
+                <tr>
+                    @*<td>@item.Id</td>*@
+                    <td>@item.Name</td>
+                    <td>@item.Address</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a class="nav-link" href="/Coustomer/EditCustomer//@item.Id">
+                        <span class="oi oi-pencil" aril-hidden="true" style="color:blue"></span>   
+                        </a>
+                    </td>
+                    <td>
+                        <a class="nav-link" href="/Coustomer/DeleteCustomer/@item.Id">
+                            <span class="oi oi-trash" aril-hidden="true" style="color:red"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+           
+        </tbody>
+
+
+    </table>
+}
+
+
+
+
+
+
+
+
+@code {
+    //List<Customer> cutomerList;
+    //protected override async Task OnInitializedAsync()
+
+    //    cutomerList = await Task.Run(() => customerService.GetCustomersList());
+    //}
+
+    List<Customer> cutomerList;
+    protected override async Task OnInitializedAsync()
+    {
+        cutomerList = await Task.Run(() => customerService.GetCustomersList());
+    }
+
+}
