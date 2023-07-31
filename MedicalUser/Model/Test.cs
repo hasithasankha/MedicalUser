@@ -5,7 +5,8 @@ namespace MedicalUser.Model
 {
     public class Test
     {
-        public int Id { get; set; }
+        [Key]
+        public int TestId { get; set; }    
 
         [Required(ErrorMessage = "Please Enter Your Testing Name")]
         public string Test_Name { get; set; }

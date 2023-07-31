@@ -49,7 +49,7 @@ namespace MedicalUser.Data
         // Get Test By ID
         public Test GetTestById(int testId)
         {
-            var data = _Context.Test.Where(a => a.Id == testId).FirstOrDefault();
+            var data = _Context.Test.Where(a => a.TestId == testId).FirstOrDefault();
 
             if (data != null)
             {
@@ -65,7 +65,7 @@ namespace MedicalUser.Data
             {
                 try
                 {
-                    var test = _Context.Test.FirstOrDefault(a => a.Id == model.Id);
+                    var test = _Context.Test.FirstOrDefault(a => a.TestId == model.TestId);
                     if (test != null)
                     {
                         test.Test_Name = model.Test_Name;
@@ -97,7 +97,7 @@ namespace MedicalUser.Data
             {
                 try
                 {
-                    var data = _Context.Test.FirstOrDefault(a => a.Id == testId);
+                    var data = _Context.Test.FirstOrDefault(a => a.TestId == testId);
                     if (data != null)
                     {
                         _Context.Test.Remove(data);

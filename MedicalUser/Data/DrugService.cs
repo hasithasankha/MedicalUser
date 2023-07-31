@@ -48,7 +48,7 @@ namespace MedicalUser.Data
         //Get ID by Drugs
         public Drug GetDrugById(int drugID)
         {
-            var data = _Context.Drug.Where(a => a.ID == drugID).FirstOrDefault();
+            var data = _Context.Drug.Where(a => a.DrugId == drugID).FirstOrDefault();
 
             if (data != null)
             {
@@ -64,7 +64,7 @@ namespace MedicalUser.Data
             {
                 try
                 {
-                    var drug = _Context.Drug.FirstOrDefault(a => a.ID == model.ID);
+                    var drug = _Context.Drug.FirstOrDefault(a => a.DrugId == model.DrugId);
                     if (drug != null)
                     {
                         drug.Trde_Name = model.Trde_Name;
@@ -98,7 +98,7 @@ namespace MedicalUser.Data
             {
                 try
                 {
-                    var data = _Context.Drug.FirstOrDefault(a => a.ID == drugID);
+                    var data = _Context.Drug.FirstOrDefault(a => a.DrugId == drugID);
                     if (data != null)
                     {
                         _Context.Drug.Remove(data);

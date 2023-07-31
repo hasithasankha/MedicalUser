@@ -4,8 +4,8 @@ namespace MedicalUser.Model
 {
     public class Drug
     {
-       
-        public int ID { get; set; }
+        [Key]
+        public int DrugId  { get; set; } 
 
         [Required(ErrorMessage ="Please Enter Trade Name")]
         public string Trde_Name { get; set; }

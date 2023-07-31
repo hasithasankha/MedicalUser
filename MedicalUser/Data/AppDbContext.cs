@@ -15,5 +15,7 @@ namespace MedicalUser.Data
         public DbSet<Drug> Drug { get; set; }
 
         public DbSet<Test> Test { get; set; }
+
+        public DbSet<Appointment> Appointment { get; set; }
     }
 }

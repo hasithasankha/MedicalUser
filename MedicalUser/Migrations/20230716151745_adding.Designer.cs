@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalUser.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230711103351_InitiallMigration")]
-    partial class InitiallMigration
+    [Migration("20230716151745_adding")]
+    partial class adding
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,9 +20,30 @@ namespace MedicalUser.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("MedicalUser.Model.Appointment", b =>
+                {
+                    b.Property<int>("APPOI_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Appointment_List")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("APPOI_Id");
+
+                    b.HasIndex("CusId");
+
+                    b.ToTable("Appointment");
+                });
+
             modelBuilder.Entity("MedicalUser.Model.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -40,14 +61,14 @@ namespace MedicalUser.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.HasKey("Id");
+                    b.HasKey("CusId");
 
                     b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("MedicalUser.Model.Drug", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("DrugId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -65,14 +86,14 @@ namespace MedicalUser.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("DrugId");
 
                     b.ToTable("Drug");
                 });
 
             modelBuilder.Entity("MedicalUser.Model.Test", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TestId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -85,9 +106,18 @@ namespace MedicalUser.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("TestId");
 
                     b.ToTable("Test");
+                });
+
+            modelBuilder.Entity("MedicalUser.Model.Appointment", b =>
+                {
+                    b.HasOne("MedicalUser.Model.Customer", "Customers")
+                        .WithMany()
+                        .HasForeignKey("CusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

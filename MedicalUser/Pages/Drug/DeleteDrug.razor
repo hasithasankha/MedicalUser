@@ -12,7 +12,7 @@
 
 <form>
     <div class="row">
-        <input type="hidden" @bind="objDrug.ID" />
+        <input type="hidden" @bind="objDrug.DrugId" />
 
 
         <div class="col-md-8">
@@ -57,7 +57,7 @@
 
     protected void DelDrug()
     {
-        drugService.DeleteDrug(objDrug.ID);
+        drugService.DeleteDrug(objDrug.DrugId);
         navManger.NavigateTo("Drug/drugList");
     }
     void Cancel()

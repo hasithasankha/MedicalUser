@@ -12,7 +12,7 @@
 
 <form>
     <div class="row">
-        <input type="hidden" @bind="objCustomer.Id" />
+        <input type="hidden" @bind="objCustomer.CusId" />
 
 
         <div class="col-md-8">
@@ -57,7 +57,7 @@
 
     protected void DelCustomer()
     {
-        customerService.DeleteCustomer(objCustomer.Id);
+        customerService.DeleteCustomer(objCustomer.CusId);
         navManger.NavigateTo("Coustomer/customerList");
     }
     void Cancel()

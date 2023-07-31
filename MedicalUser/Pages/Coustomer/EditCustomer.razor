@@ -11,7 +11,7 @@
 <EditForm Model="@objCustomer" OnValidSubmit="@UpdateCustomer">
     <DataAnnotationsValidator />
     <div class="row">
-        <input type="hidden" @bind="objCustomer.Id" />
+        <input type="hidden" @bind="objCustomer.CusId" />
 
         <div class="col-md-8">
             <div class="form-group">

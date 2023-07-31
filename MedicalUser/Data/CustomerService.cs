@@ -45,7 +45,7 @@ namespace MedicalUser.Data
         // Get Customer By ID
         public Customer GetCustomerById(int customerId)
         {
-            var data = _Context.Customer.Where(a => a.Id == customerId).FirstOrDefault();
+            var data = _Context.Customer.Where(a => a.CusId == customerId).FirstOrDefault();
 
             if (data != null)
             {
@@ -62,7 +62,7 @@ namespace MedicalUser.Data
             {
                 try
                 {
-                    var customer = _Context.Customer.FirstOrDefault(a => a.Id == model.Id);
+                    var customer = _Context.Customer.FirstOrDefault(a => a.CusId == model.CusId);
                     if (customer != null)
                     {
                         customer.Name = model.Name;
@@ -90,7 +90,7 @@ namespace MedicalUser.Data
             {
                 try
                 {
-                    var data = _Context.Customer.FirstOrDefault(a => a.Id == customerId);
+                    var data = _Context.Customer.FirstOrDefault(a => a.CusId == customerId);
                     if (data != null)
                     {
                         _Context.Customer.Remove(data);

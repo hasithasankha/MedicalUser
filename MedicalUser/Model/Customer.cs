@@ -5,7 +5,8 @@ namespace MedicalUser.Model
 {
     public class Customer
     {
-        public int Id { get; set; }
+        [Key]
+        public int CusId { get; set; }  
 
         [Required(ErrorMessage = "Your Name is required")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Last Name cannot have less than 3 characters and more than 20 characters in length")]
